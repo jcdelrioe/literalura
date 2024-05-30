@@ -1,10 +1,14 @@
 package com.aluracursos.literalura.principal;
 
 import com.aluracursos.literalura.model.Datos;
+import com.aluracursos.literalura.model.DatosLibros;
 import com.aluracursos.literalura.service.ConsumoAPI;
 import com.aluracursos.literalura.service.ConvierteDatos;
 
+import java.util.Comparator;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Principal {
   private Scanner teclado = new Scanner(System.in);
@@ -12,13 +16,13 @@ public class Principal {
   private ConsumoAPI consumoApi = new ConsumoAPI();
   private ConvierteDatos conversor = new ConvierteDatos();
 
-  private String json = consumoApi.obtenerDatos(URL_BASE);
-  private Datos datos = conversor.obtenerDatos(json, Datos.class);
+//  private String json = consumoApi.obtenerDatos(URL_BASE);
+//  private Datos datos = conversor.obtenerDatos(json, Datos.class);
   
   public void muestraElMenu(){
 //    var json = consumoApi.obtenerDatos(URL_BASE);
 //    var datos = conversor.obtenerDatos(json, Datos.class);
-    System.out.println(datos);
+//    System.out.println(datos);
 
     var opcion = -1;
     while(opcion != 0){
@@ -52,10 +56,15 @@ public class Principal {
 
   private void buscarLibroPorTitulo() {
     System.out.println("Ingrese el título del libro:");
-    var titulo = teclado.nextLine();
+    var tituloLibroBuscado = teclado.nextLine();
 
-//    datos.resultados().stream()
-//      .filter(l -> l.g)
+    String json = consumoApi.obtenerDatos(URL_BASE + "?search=" + tituloLibroBuscado.replace(" ", "%20"));
+    Datos datos = conversor.obtenerDatos(json, Datos.class);
+
+    List<DatosLibros> librosEncontrados = datos.resultados().stream()
+      .filter(l -> l.titulo().toLowerCase().contains(tituloLibroBuscado.toLowerCase()))
+      .collect(Collectors.toList());
+    System.out.println(librosEncontrados);
 
   }
 }
