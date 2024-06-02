@@ -74,21 +74,6 @@ public class Principal {
     }
   }
 
-//  private Datos obtenerDatosLibros(){
-//    System.out.println("Ingrese el título del libro:");
-//    var tituloLibroBuscado = teclado.nextLine();
-//
-//    String json = consumoApi.obtenerDatos(URL_BASE + "?search=" + tituloLibroBuscado.replace(" ", "%20"));
-//    System.out.println("json: " + json);
-//
-//    Datos libros = conversor.obtenerDatos(json, Datos.class);
-//    System.out.println("DatosLibros: " + libros);
-//
-//    return libros;
-//  }
-
-
-
   private void buscarLibroPorTitulo() {
     System.out.println("Ingrese el título del libro:");
     var tituloLibroBuscado = teclado.nextLine();
@@ -99,8 +84,6 @@ public class Principal {
     Optional<Libro> libroEncontrado = libros.resultados().stream()
       .map(Libro::new)
       .findFirst();
-
-    System.out.println(libroEncontrado.get().getAutor().getNombre());
 
     if (libroEncontrado.isPresent()){
 
