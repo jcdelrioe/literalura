@@ -53,7 +53,10 @@ public class Principal {
           buscarLibroPorTitulo();
           break;
         case 2:
-          listarLibros();
+          listarLibrosRegistrados();
+          break;
+        case 3:
+          listarAutoresRegistrados();
           break;
         case 0:
           System.out.println("Cerrando la aplicación");
@@ -118,8 +121,13 @@ public class Principal {
 
   }
 
-  private void listarLibros() {
+  private void listarLibrosRegistrados() {
     List<Libro> libros = libroRepository.findAll();
     libros.stream().forEach(System.out::println);
+  }
+
+  private void listarAutoresRegistrados(){
+    List<Autor> autores = autorRepository.findAll();
+    autores.stream().forEach(System.out::println);
   }
 }
