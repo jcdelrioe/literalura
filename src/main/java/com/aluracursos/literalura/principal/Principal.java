@@ -61,6 +61,9 @@ public class Principal {
         case 4:
           listarAutoresVivos();
           break;
+        case 5:
+          listarLibrosPorIdioma();
+          break;
         case 0:
           System.out.println("Cerrando la aplicación");
           break;
@@ -121,7 +124,6 @@ public class Principal {
     }else{
       System.out.println("El libro no ha sido encontrado");
     }
-
   }
 
   private void listarLibrosRegistrados() {
@@ -155,7 +157,24 @@ public class Principal {
       System.out.println("Escriba un año válido");
       teclado.nextLine();
     }
-
-
   }
+
+  private void listarLibrosPorIdioma(){
+    System.out.println("""
+      Ingrese el idioma:
+      es - español
+      en - ingles
+      fr - francés
+      pt - portugues
+      """);
+    String idioma = teclado.nextLine();
+
+    List<Libro> librosPorIdioma = libroRepository.findByIdiomas(idioma);
+    if (librosPorIdioma.isEmpty()){
+      System.out.println("No se encontraron libros en ese idioma");
+    }else{
+      librosPorIdioma.forEach(System.out::println);
+    }
+  }
+
 }
