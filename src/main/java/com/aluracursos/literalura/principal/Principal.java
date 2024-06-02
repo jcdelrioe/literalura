@@ -5,11 +5,8 @@ import com.aluracursos.literalura.model.DatosLibros;
 import com.aluracursos.literalura.service.ConsumoAPI;
 import com.aluracursos.literalura.service.ConvierteDatos;
 
-import java.util.Comparator;
-import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 public class Principal {
   private Scanner teclado = new Scanner(System.in);
@@ -17,14 +14,7 @@ public class Principal {
   private ConsumoAPI consumoApi = new ConsumoAPI();
   private ConvierteDatos conversor = new ConvierteDatos();
 
-//  private String json = consumoApi.obtenerDatos(URL_BASE);
-//  private Datos datos = conversor.obtenerDatos(json, Datos.class);
-  
   public void muestraElMenu(){
-//    var json = consumoApi.obtenerDatos(URL_BASE);
-//    var datos = conversor.obtenerDatos(json, Datos.class);
-//    System.out.println(datos);
-
     var opcion = -1;
     while(opcion != 0){
       var menu = """
