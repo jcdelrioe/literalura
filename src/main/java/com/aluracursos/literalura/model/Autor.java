@@ -7,6 +7,8 @@ public class Autor {
   private Integer fechaDeNacimiento;
   private Integer fechaDeMuerte;
 
+  public Autor(){}
+
   public Autor(DatosAutor datosAutor){
     this.nombre = datosAutor.nombre();
     this.fechaDeNacimiento = datosAutor.fechaDeNacimiento();

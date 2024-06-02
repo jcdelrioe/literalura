@@ -2,17 +2,22 @@ package com.aluracursos.literalura.principal;
 
 import com.aluracursos.literalura.model.Datos;
 import com.aluracursos.literalura.model.DatosLibros;
+import com.aluracursos.literalura.model.Libro;
 import com.aluracursos.literalura.service.ConsumoAPI;
 import com.aluracursos.literalura.service.ConvierteDatos;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Principal {
   private Scanner teclado = new Scanner(System.in);
   private static final String URL_BASE = "https://gutendex.com/books/";
   private ConsumoAPI consumoApi = new ConsumoAPI();
   private ConvierteDatos conversor = new ConvierteDatos();
+  private List<Datos> datosLibrosBuscados = new ArrayList<>();
 
   public void muestraElMenu(){
     var opcion = -1;
@@ -35,6 +40,9 @@ public class Principal {
         case 1:
           buscarLibroPorTitulo();
           break;
+        case 2:
+          listarLibros();
+          break;
         case 0:
           System.out.println("Cerrando la aplicación");
           break;
@@ -45,24 +53,45 @@ public class Principal {
     }
   }
 
+//  private Datos obtenerDatosLibros(){
+//    System.out.println("Ingrese el título del libro:");
+//    var tituloLibroBuscado = teclado.nextLine();
+//
+//    String json = consumoApi.obtenerDatos(URL_BASE + "?search=" + tituloLibroBuscado.replace(" ", "%20"));
+//    System.out.println("json: " + json);
+//
+//    Datos libros = conversor.obtenerDatos(json, Datos.class);
+//    System.out.println("DatosLibros: " + libros);
+//
+//    return libros;
+//  }
+
+
+
   private void buscarLibroPorTitulo() {
+//    Datos libros = obtenerDatosLibros();
+//    datosLibrosBuscados.add(libros);
+
     System.out.println("Ingrese el título del libro:");
     var tituloLibroBuscado = teclado.nextLine();
 
     String json = consumoApi.obtenerDatos(URL_BASE + "?search=" + tituloLibroBuscado.replace(" ", "%20"));
-    Datos datos = conversor.obtenerDatos(json, Datos.class);
+    Datos libros = conversor.obtenerDatos(json, Datos.class);
 
-    Optional<DatosLibros> libroEncontrado = datos.resultados().stream()
-      .filter(l -> l.titulo().toLowerCase().contains(tituloLibroBuscado.toLowerCase()))
+    Optional<Libro> libroEncontrado = libros.resultados().stream()
+      .map(Libro::new)
       .findFirst();
 
-    if(libroEncontrado.isPresent()){
-      System.out.println("Libro encontrado: ");
-      System.out.println(libroEncontrado.get());
+    if (libroEncontrado.isPresent()){
+      Libro libro = libroEncontrado.get();
+      System.out.println(libro);
     }else{
-      System.out.println("Libro no encontrado");
+      System.out.println("El libro buscado no se encuentra");
     }
 
+  }
 
+  private void listarLibros() {
+    System.out.println(datosLibrosBuscados);
   }
 }

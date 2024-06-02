@@ -8,6 +8,8 @@ public class Libro {
  private List<String> idiomas;
  private Double numeroDeDescarga;
 
+ public Libro(){}
+
  public Libro(DatosLibros datosLibros){
   this.titulo = datosLibros.titulo();
   this.autor = new Autor((datosLibros.autor().get(0)));
