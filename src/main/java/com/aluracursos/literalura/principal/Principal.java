@@ -7,6 +7,7 @@ import com.aluracursos.literalura.service.ConvierteDatos;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
@@ -61,10 +62,17 @@ public class Principal {
     String json = consumoApi.obtenerDatos(URL_BASE + "?search=" + tituloLibroBuscado.replace(" ", "%20"));
     Datos datos = conversor.obtenerDatos(json, Datos.class);
 
-    List<DatosLibros> librosEncontrados = datos.resultados().stream()
+    Optional<DatosLibros> libroEncontrado = datos.resultados().stream()
       .filter(l -> l.titulo().toLowerCase().contains(tituloLibroBuscado.toLowerCase()))
-      .collect(Collectors.toList());
-    System.out.println(librosEncontrados);
+      .findFirst();
+
+    if(libroEncontrado.isPresent()){
+      System.out.println("Libro encontrado: ");
+      System.out.println(libroEncontrado.get());
+    }else{
+      System.out.println("Libro no encontrado");
+    }
+
 
   }
 }
