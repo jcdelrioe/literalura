@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Table(name = "libros")
@@ -11,10 +12,13 @@ public class Libro {
  @Id
  @GeneratedValue(strategy = GenerationType.IDENTITY)
  private Long Id;
+
  @Column(unique = true)
  private String titulo;
+
  private String idiomas;
  private Double numeroDeDescarga;
+
  @ManyToOne
  @JoinColumn(name = "autor_id", nullable = false)
  private Autor autor;

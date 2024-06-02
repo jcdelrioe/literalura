@@ -58,6 +58,14 @@ public class Autor {
     this.fechaDeMuerte = fechaDeMuerte;
   }
 
+  public List<Libro> getLibros() {
+    return libros;
+  }
+
+  public void setLibros(List<Libro> libros) {
+    this.libros = libros;
+  }
+
   @Override
   public String toString() {
     return
