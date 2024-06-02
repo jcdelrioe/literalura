@@ -58,6 +58,9 @@ public class Principal {
         case 3:
           listarAutoresRegistrados();
           break;
+        case 4:
+          listarAutoresVivos();
+          break;
         case 0:
           System.out.println("Cerrando la aplicación");
           break;
@@ -129,5 +132,30 @@ public class Principal {
   private void listarAutoresRegistrados(){
     List<Autor> autores = autorRepository.findAll();
     autores.stream().forEach(System.out::println);
+  }
+
+  private void listarAutoresVivos(){
+    System.out.println("Ingrese el año: ");
+    int annoBuscado;
+    String anno;
+
+    try{
+      annoBuscado = teclado.nextInt();
+      anno = String.valueOf(annoBuscado);
+
+      List<Autor> autoresVivos = autorRepository.buscarAutorVivo(anno);
+
+      if (autoresVivos.isEmpty()){
+        System.out.println("No se encontraron autores vivos en ese año");
+      }else{
+        autoresVivos.stream().forEach(System.out::println);
+      }
+
+    }catch (Exception e){
+      System.out.println("Escriba un año válido");
+      teclado.nextLine();
+    }
+
+
   }
 }
