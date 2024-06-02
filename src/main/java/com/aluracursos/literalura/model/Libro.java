@@ -1,20 +1,40 @@
 package com.aluracursos.literalura.model;
 
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "libros")
 public class Libro {
+ @Id
+ @GeneratedValue(strategy = GenerationType.IDENTITY)
+ private Long Id;
+ @Column(unique = true)
  private String titulo;
- private Autor autor;
- private List<String> idiomas;
+ private String idiomas;
  private Double numeroDeDescarga;
+ @ManyToOne
+ @JoinColumn(name = "autor_id", nullable = false)
+ private Autor autor;
+
 
  public Libro(){}
 
  public Libro(DatosLibros datosLibros){
   this.titulo = datosLibros.titulo();
   this.autor = new Autor((datosLibros.autor().get(0)));
-  this.idiomas = datosLibros.idiomas();
+  this.idiomas = datosLibros.idiomas().get(0);
   this.numeroDeDescarga = datosLibros.numeroDeDescargas();
+ }
+
+ public Long getId() {
+  return Id;
+ }
+
+ public void setId(Long id) {
+  Id = id;
  }
 
  public String getTitulo() {
@@ -33,11 +53,11 @@ public class Libro {
   this.autor = autor;
  }
 
- public List<String> getIdiomas() {
+ public String getIdiomas() {
   return idiomas;
  }
 
- public void setIdiomas(List<String> idiomas) {
+ public void setIdiomas(String idiomas) {
   this.idiomas = idiomas;
  }
 
